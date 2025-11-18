@@ -1,8 +1,8 @@
 
 // comentar cada proceso automaticamente para que sea entendible 
 const mongoose = require('mongoose');
-const { estimatedDocumentCount } = require('./perfilusuario');
-const PerfilUsuario = require('./perfilusuario');
+const { estimatedDocumentCount } = require('./userProfile');
+const userProfile = require('./userProfile');
 
 // Schema for counter
 
@@ -15,72 +15,73 @@ const counterSchema = new mongoose.Schema({
 
 const Counter = mongoose.models.Counter || mongoose.model('Counter', counterSchema);
 
-// definir el esquema para el usuario
-const usuarioSchema = new mongoose.Schema({
-    id_usuario: {
+// definir el esquema para el user
+const userSchema = new mongoose.Schema({
+  id_user: {
     type: Number,
     unique: true
   },
-    tipo_documento: {
+  tipo_documento: {
     type: String,
     required: true,
     trim: true
-    },
-    numero_documento: {
+  },
+  numero_documento: {
     type: String,
     required: true,
     trim: true
-    },
-    primer_nombre: {
+  },
+  primer_nombre: {
     type: String,
     required: true,
     trim: true
-    },
-    segundo_nombre: {
+  },
+  segundo_nombre: {
     type: String,
     trim: true
-    },
-    primer_apellido: {
+  },
+  primer_apellido: {
     type: String,
     required: true,
     trim: true
-    },
-    segundo_apellido: {
+  },
+  segundo_apellido: {
     type: String,
     trim: true
-    },
-    direccion_correo: { 
+  },
+  direccion_correo: {
     type: String,
     required: true,
     trim: true,
     unique: true
-    },
-    numero_celular: {
+  },
+  numero_celular: {
     type: String,
     required: true,
     trim: true
-    },
-    foto_perfil: {
+  },
+  foto_perfil: {
     type: String,
     trim: true
-    },
-    estado: {
-    type: String,
-    required: true,
-    trim: true
-    },
-    clave: {
+  },
+  estado: {
     type: String,
     required: true,
     trim: true
-    },
-    PerfilUsuarioidint: {
+  },
+  clave: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  userProfileidint: {
     type: Number,
     required: true,
-    ref: 'PerfilUsuario'
-    }
-},{ timestamps: true,
-    collection: 'usuario' // 👈 fuerza el nombre 'usuario'
+    ref: 'userProfile'
+  }
+}, {
+  timestamps: true,
+  collection: 'user' // 👈 fuerza el nombre 'user'
 }
 );
 

@@ -19,10 +19,10 @@ const incidencyReportsSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    VihiculeId: {
+    VehiculeId: {
         Number
     },
-    incidencyId: {
+    IncidencyId: {
         type: Number,
         required: true
     }
@@ -149,8 +149,8 @@ incidencyReportsSchemaema.statics.delete = async function (idint) {
     }
 };
 
-const PerfilUsuario = mongoose.model('PerfilUsuario', incidencyReportsSchemaema);
-module.exports = PerfilUsuario;
+const incidencyReports = mongoose.model('incidencyReports', incidencyReportsSchema);
+module.exports = incidencyReports;
 
 
 
