@@ -62,93 +62,95 @@ incidencyReportsSchema.statics.create = async function (data) {
     }
 };
 
-// funcion para obtener todos los perfiles de usuario metodo estadistico par mantener la API similar
 // Function to get all the reports
-incidencyReportsSchemaema.statics.findAll = async function () {
+incidencyReportsSchema.statics.findAll = async function () {
 
     try {
         const report = await this.find().sort({ idint: 1 });
-
-
-        // const reports = await this.find().sort({});
-        return reports.map(perfil => ({
-            idint: reports.$inc,
-            perfil: perfil.perfil
+        return report.map(report => ({
+            idint: report.idint,
+            date: report.date,
+            VihiculeId: report.VihiculeId,
+            incidencyId: report.incidencyId
         }));
     } catch (error) {
         throw new Error(`Error when getting the reports: ${error.message}`);
     }
 };
 
-//buscar byidint metodo estadistico par mantener la API similar sirve para buscar por idint
-
-incidencyReportsSchemaema.statics.findById = async function (idint) {
+// Find one element by idint
+incidencyReportsSchema.statics.findById = async function (idint) {
     try {
-        const perfil = await this.findOne({ idint });
-        if (!perfil) {
-            throw new Error('Perfil de usuario no encontrado');
+        const report = await this.findOne({ idint });
+        if (!report) {
+            throw new Error('Report not found');
         }
         return {
-            idint: perfil.idint,
-            perfil: perfil.perfil
+            idint: report.idint,
+            date: report.date,
+            VihiculeId: report.VihiculeId,
+            incidencyId: report.incidencyId
         };
     } catch (error) {
-        throw new Error(`Error al obtener perfil de usuario: ${error.message}`);
+        throw new Error(`Error when gettingh the report: ${error.message}`);
     }
 };
 
-//funcion searchbydescripcion metodo estadistico par mantener la API similar sirve para buscar por perfil
-incidencyReportsSchemaema.statics.searchByDescription = async function (searchTerm) {
-    try {
-        const perfiles = await this.find({
-            perfil: { $regex: searchTerm, $options: 'i' }
-        }).sort({ perfil: 1 });
-        return perfiles.map(perfil => ({
-            idint: perfil.idint,
-            perfil: perfil.perfil
-        }));
-    } catch (error) {
-        throw new Error(`Error al buscar perfiles de usuario: ${error.message}`);
-    }
-};
+// incidencyReportsSchemaema.statics.searchByDescription = async function (searchTerm) {
+//     try {
+//         const perfiles = await this.find({
+//             perfil: { $regex: searchTerm, $options: 'i' }
+//         }).sort({ perfil: 1 });
+//         return perfiles.map(perfil => ({
+//             idint: perfil.idint,
+//             perfil: perfil.perfil
+//         }));
+//     } catch (error) {
+//         throw new Error(`Error al buscar perfiles de usuario: ${error.message}`);
+//     }
+// };
 
-//funcion update perfil de usuario metodo estadistico par mantener la API similar sirve para actualizar el perfil de usuario
-incidencyReportsSchemaema.statics.update = async function (idint, data) {
+// Function to update a report by idint
+incidencyReportsSchema.statics.update = async function (idint, data) {
     try {
-        const perfil = await this.findOneAndUpdate(
+        const report = await this.findOneAndUpdate(
             { idint },
             data,
             { new: true }
         );
-        if (!perfil) {
-            throw new Error('Perfil de usuario no encontrado para actualizar');
+        if (!report) {
+            throw new Error('Unable to find report to update');
         }
         return {
-            idint: perfil.idint,
-            perfil: perfil.perfil
+            idint: report.idint,
+            report: report.report
         };
     } catch (error) {
-        throw new Error(`Error al actualizar perfil de usuario: ${error.message}`);
+        throw new Error(`Error to update the report: ${error.message}`);
     }
 };
 
-//fucncion delete metodo estadistico par mantener la API similar sirve para eliminar el perfil de usuario
+// Function to delete a report by idint
 incidencyReportsSchemaema.statics.delete = async function (idint) {
-    //verifica si el perfil de usuario existe antes de eliminarlo
+
+    // Verify if the report exists before deleting it.
     try {
-        const perfil = await this.findOneAndDelete({ idint });
-        if (!perfil) {
-            throw new Error('Perfil de usuario no encontrado para eliminar');
+        const report = await this.findOneAndDelete({ idint });
+        if (!report) {
+            throw new Error('Report not found to delete');
         }
         return {
-            idint: perfil.idint,
-            perfil: perfil.perfil
+            idint: report.idint,
+            date: report.date,
+            VihiculeId: report.VihiculeId,
+            incidencyId: report.incidencyId
         };
     } catch (error) {
-        throw new Error(`Error al eliminar perfil de usuario: ${error.message}`);
+        throw new Error(`Error to delete the report: ${error.message}`);
     }
 };
 
+// Export the model to be used in other parts of the application
 const incidencyReports = mongoose.model('incidencyReports', incidencyReportsSchema);
 module.exports = incidencyReports;
 
