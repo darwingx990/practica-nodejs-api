@@ -153,6 +153,3 @@ incidencyReportsSchemaema.statics.delete = async function (idint) {
 // Export the model to be used in other parts of the application
 const incidencyReports = mongoose.model('incidencyReports', incidencyReportsSchema);
 module.exports = incidencyReports;
-
-
-

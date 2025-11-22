@@ -5,26 +5,32 @@ const create = async (req, res) => {
     try {
 
         const {  } = req.body;
-        if (!descripcion){
+        // if (!descripcion){
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: 'La descripción es requerida'
+        //     });
+        // }
+        if ( !data ) {
             return res.status(400).json({
                 success: false,
-                message: 'La descripción es requerida'
+                message: 'All fields are required'
             });
         }
 
         //invocar el metodo create del modelo
-        const tipo_usuario = await incidencyReports.create({ descripcion }); 
-
+        // Call the create method of the model
+        const incidencyReport = await incidencyReports.create({ data }); 
         res.status(201).json({
             success: true,
-            message: 'Tipo Usuario registrado exitosamente',
-            data: tipo_usuario
+            message: 'Report created successfully',
+            data: incidencyReport
         });
     }catch (error){
-        console.error('Error al crear tipo de usuario:', error);
+        console.error('Error to create the report:', error);
         res.status(500).json({
             success: false,
-            message: 'Error interno del servidor',
+            message: 'Internal error with creating the report on the server side.',
             data: error.message
         });
     }
@@ -32,7 +38,7 @@ const create = async (req, res) => {
 
 
 
-//exportar los controladores
+// Exporting the create function to be used in the controller
 module.exports = {
     create
 };
