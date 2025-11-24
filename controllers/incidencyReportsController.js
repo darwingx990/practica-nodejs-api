@@ -17,8 +17,7 @@ const create = async (req, res) => {
                 message: 'All fields are required'
             });
         }
-
-        //invocar el metodo create del modelo
+        
         // Call the create method of the model
         const incidencyReport = await incidencyReports.create({ data }); 
         res.status(201).json({

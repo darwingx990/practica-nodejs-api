@@ -60,42 +60,42 @@ app.use('*', (req, res) => {
     });
 });
 
-// Middleware para manejo de errores global
+// Middleware for global error handling
 app.use((error, req, res, next) => {
-    console.error('Error no manejado:', error);
+    console.error('Error nor handled:', error);
 
     res.status(500).json({
         success: false,
-        message: 'Error interno del servidor',
-        error: process.env.NODE_ENV === 'development' ? error.message : 'Error del servidor'
+        message: 'Internal Server Error',
+        error: process.env.NODE_ENV === 'development' ? error.message : 'Error in the server'
     });
 });
 
-// Configurar puerto
+// Define the port
 const PORT = process.env.PORT || 3000;
 
-// Iniciar servidor con conexión a la base de datos
+// Start the server with database connection
 const startServer = async () => {
     try {
         await connectDB();
         const server = app.listen(PORT, () => {
-            console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-            console.log(`📚 Documentación de la API disponible en: http://localhost:${PORT}`);
-            console.log(`🌍 Entorno: ${process.env.NODE_ENV || 'development'}`);
+            console.log(`🚀 Server running in the port: ${PORT}`);
+            console.log(`📚 API documentation is available in: http://localhost:${PORT}`);
+            console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
         });
 
-        // Manejar errores del servidor
+        // Handle server errors
         server.on('error', (error) => {
             if (error.code === 'EADDRINUSE') {
-                console.error(`Puerto ${PORT} ya está en uso. Intenta con otro puerto.`);
+                console.error(`The port ${PORT} is already in used. Try again with another port.`);
                 process.exit(1);
             } else {
-                console.error('Error del servidor:', error);
+                console.error('Server Error:', error);
                 process.exit(1);
             }
         });
     } catch (error) {
-        console.error('Error al iniciar el servidor:', error);
+        console.error('Error when stating the Server:', error);
         process.exit(1);
     }
 };
