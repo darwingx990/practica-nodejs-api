@@ -131,7 +131,7 @@ incidencyReportsSchema.statics.update = async function (idint, data) {
 };
 
 // Function to delete a report by idint
-incidencyReportsSchemaema.statics.delete = async function (idint) {
+incidencyReportsSchema.statics.delete = async function (idint) {
 
     // Verify if the report exists before deleting it.
     try {

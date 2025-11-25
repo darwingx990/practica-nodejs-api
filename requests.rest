@@ -1,0 +1,36 @@
+### Root Endpoint
+GET http://localhost:3001/
+
+### Get All Incidency Reports
+GET http://localhost:3001/api/incidency-reports
+
+### Create Incidency Report
+POST http://localhost:3001/api/incidency-reports
+Content-Type: application/json
+
+{
+    "data": {
+        "date": "2023-10-27T10:00:00.000Z",
+        "VehiculeId": 123,
+        "IncidencyId": 1
+    }
+}
+
+### Get Incidency Report by ID
+# Replace :id with a valid ID from the Get All response (e.g., 1)
+GET http://localhost:3001/api/incidency-reports/1
+
+### Update Incidency Report
+# Replace :id with a valid ID
+PUT http://localhost:3001/api/incidency-reports/1
+Content-Type: application/json
+
+{
+    "date": "2023-10-28T12:00:00.000Z",
+    "VehiculeId": 123,
+    "IncidencyId": 2
+}
+
+### Delete Incidency Report
+# Replace :id with a valid ID
+DELETE http://localhost:3001/api/incidency-reports/1
