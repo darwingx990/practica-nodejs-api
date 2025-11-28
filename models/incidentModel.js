@@ -27,7 +27,7 @@ incidentSchema.pre("save", async function (next) {
   if (this.isNew) {
     try {
       const counter = await Counter.findByIdAndUpdate(
-        "incident_id",
+        "idint",
         { $inc: { seq: 1 } },
         { new: true, upsert: true }
       );
@@ -39,7 +39,7 @@ incidentSchema.pre("save", async function (next) {
   } else next();
 });
 
-incidentSchema.statics.createIncident = async function (data) {
+incidentSchema.statics.create = async function (data) {
   try {
     const incident = new this(data);
     await incident.save();
@@ -77,7 +77,6 @@ incidentSchema.statics.deleteIncident = async function (idint) {
   return deleted;
 };
 
-const Incident =
-  mongoose.models.Incident || mongoose.model("Incident", incidentSchema);
+const Incident = mongoose.models.Incident || mongoose.model("Incident", incidentSchema);
 
 module.exports = Incident;

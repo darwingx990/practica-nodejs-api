@@ -1,6 +1,6 @@
 // routes/picoPlacaRoutes.js
-import express from 'express';
-import { createPicoPlaca, getPicoPlaca, updatePicoPlaca, deletePicoPlaca } from '../controllers/picoPlacaController.js';
+const express = require('express');
+const { createPicoPlaca, getPicoPlaca, updatePicoPlaca, deletePicoPlaca } = require('../controllers/picoPlacaController');
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.get('/', getPicoPlaca);
 router.put('/:id', updatePicoPlaca);
 router.delete('/:id', deletePicoPlaca);
 
-export default router;
+module.exports = router;

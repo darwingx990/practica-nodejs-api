@@ -1,0 +1,47 @@
+### Crear un registro de acceso/salida (Entrada)
+POST http://localhost:3000/api/access-exits
+Content-Type: application/json
+
+{
+  "movement": "Entrada",
+  "door": "Puerta Principal",
+  "dateTime": "2024-11-28T10:00:00Z",
+  "vehicleId": "ABC123",
+  "userId": 1
+}
+
+### Crear un registro de salida
+POST http://localhost:3000/api/access-exits
+Content-Type: application/json
+
+{
+  "movement": "Salida",
+  "door": "Puerta Lateral",
+  "dateTime": "2024-11-28T15:00:00Z",
+  "vehicleId": "ABC123",
+  "userId": 1
+}
+
+### Obtener todos los registros de acceso/salida
+GET http://localhost:3000/api/access-exits
+
+### Obtener registros por tipo de movimiento (Entrada o Salida)
+GET http://localhost:3000/api/access-exits/movement/Entrada
+
+### Obtener registro por ID interno (idint)
+# Reemplaza 1 con un idint válido
+GET http://localhost:3000/api/access-exits/idint/1
+
+### Filtrar registros por rango de fechas
+GET http://localhost:3000/api/access-exits/date-range?start=2024-11-01&end=2024-11-30
+
+### Actualizar registro por ID interno
+# Reemplaza 1 con un idint válido
+PUT http://localhost:3000/api/access-exits/1
+Content-Type: application/json
+
+{
+  "movement": "Entrada",
+  "door": "Puerta Trasera",
+  "dateTime": "2024-11-28T10:30:00Z"
+}

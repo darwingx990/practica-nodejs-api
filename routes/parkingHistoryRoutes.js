@@ -1,5 +1,5 @@
-import express from 'express';
-import parkingHistoryController from '../controllers/parkingHistoryController.js';
+const express = require('express');
+const parkingHistoryController = require('../controllers/parkingHistoryController');
 
 const router = express.Router();
 
@@ -11,4 +11,4 @@ router.get('/search', parkingHistoryController.searchByDescription);
 router.put('/:id', parkingHistoryController.update);
 router.delete('/:id', parkingHistoryController.delete);
 
-export default router;
+module.exports = router;

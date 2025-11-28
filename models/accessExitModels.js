@@ -40,6 +40,14 @@ const accessExitSchema = new mongoose.Schema({
     required: false,
     trim: true,
   },
+
+  vehicleId: {
+    type: Number,
+    ref: 'Vehicle',
+    required: true,
+    index: true
+  }
+
 });
 
 // Pre-save hook to auto-increment idint
@@ -69,7 +77,7 @@ accessExitSchema.statics.create = async function (data) {
     await accessExit.save();
     return accessExit;
   } catch (error) {
-    throw new Error(`Error creating accessExit: ${error.message}`);
+    throw new Error("Error creating accessExit:");
   }
 };
 

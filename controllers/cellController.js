@@ -1,12 +1,12 @@
-const Cell = require("../models/cell.model"); // Asegúrate de que la ruta sea correcta
+const Cell = require("../models/cellModel");
 
 // ================= CONTROLLER ================= //
 
 // Crear celda
-exports.createCell = async (req, res) => {
+exports.create = async (req, res) => {
   try {
     const data = req.body;
-    const newCell = await Cell.createCell(data);
+    const newCell = await Cell.create(data);
 
     res.status(201).json({
       message: "Cell created successfully",

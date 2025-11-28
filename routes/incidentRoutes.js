@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/incidentController");
 
-router.post("/incidents", controller.createIncident);
+router.post("/incidents", controller.create);
 router.get("/incidents", controller.getAllIncidents);
 router.put("/incidents/:idint", controller.updateIncident);
 router.delete("/incidents/:idint", controller.deleteIncident);

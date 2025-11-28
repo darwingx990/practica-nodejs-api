@@ -1,0 +1,48 @@
+### Crear un incidente
+POST http://localhost:3000/api/incidents/incidents
+Content-Type: application/json
+
+{
+  "name": "Daño en vehículo"
+}
+
+### Crear otro incidente
+POST http://localhost:3000/api/incidents/incidents
+Content-Type: application/json
+
+{
+  "name": "Robo de accesorios"
+}
+
+### Obtener todos los incidentes
+GET http://localhost:3000/api/incidents/incidents
+
+### Actualizar incidente por ID interno
+# Reemplaza 1 con un idint válido
+PUT http://localhost:3000/api/incidents/incidents/1
+Content-Type: application/json
+
+{
+  "name": "Daño en vehículo - Actualizado"
+}
+
+### Eliminar incidente por ID interno
+# Reemplaza 2 con un idint válido
+DELETE http://localhost:3000/api/incidents/incidents/2
+
+###
+### NOTA: Los endpoints de incident-reports no están implementados
+### Usar /api/incidency-reports en su lugar
+###
+
+### Intentar crear reporte de incidente (retorna 501 Not Implemented)
+POST http://localhost:3000/api/incidents/incident-reports
+Content-Type: application/json
+
+{
+  "incidentId": 1,
+  "description": "Prueba"
+}
+
+### Obtener todos los reportes (retorna 501 Not Implemented)
+GET http://localhost:3000/api/incidents/incident-reports

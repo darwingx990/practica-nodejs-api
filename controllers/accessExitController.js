@@ -1,4 +1,4 @@
-const AccessExit = require("../models/accessExit.model");
+const AccessExit = require("../models/accessExitModels");
 
 // ====================================================
 //  Crear un movimiento (entrada o salida)

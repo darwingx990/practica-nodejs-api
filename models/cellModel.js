@@ -7,8 +7,7 @@ const counterSchema = new mongoose.Schema({
   seq: { type: Number, default: 0 },
 });
 
-const Counter =
-  mongoose.models.Counter || mongoose.model("Counter", counterSchema);
+const Counter = mongoose.models.Counter || mongoose.model("Counter", counterSchema);
 
 // Main schema for AccesoSalida
 const cellSchema = new mongoose.Schema({
@@ -36,7 +35,7 @@ cellSchema.pre("save", async function (next) {
     try {
       const counter = await Counter.findByIdAndUpdate(
         // Actualizar el contador
-        "idint_cell", // ID del contador
+        "idint", // ID del contador
         { $inc: { seq: 1 } }, // Incrementar el contador en 1
         { new: true, upsert: true } // Crear el contador si no existe
       );
@@ -53,7 +52,7 @@ cellSchema.pre("save", async function (next) {
 
 //crear
 
-cellSchema.satatics.createCell = async function (data) {
+cellSchema.statics.create = async function (data) {
   try {
     const newCell = new this(data); // Crear una nueva instancia de la celda
     return await newCell.save(); // Guardar la nueva celda en la base de datos
@@ -62,23 +61,29 @@ cellSchema.satatics.createCell = async function (data) {
   }
 };
 
-// buscar celda
-
-cellSchema.statics.findCell = async function () {
-  // Buscar todas las celdas
+// buscar todas las celdas
+cellSchema.statics.findAll = async function () {
   try {
     return await this.find(); // Devolver todas las celdas
   } catch (error) {
-    // En caso de error
-    new Error(`Error finding cell: ${error.message}`); // Lanzar un error
+    throw new Error(`Error finding cells: ${error.message}`);
+  }
+};
+
+// buscar celda por idint
+cellSchema.statics.findByIdint = async function (idint) {
+  try {
+    return await this.findOne({ idint }); // Buscar celda por idint
+  } catch (error) {
+    throw new Error(`Error finding cell: ${error.message}`);
   }
 };
 
 // actualizar celda
 
-cellSchema.statics.updateCell = async function (indint, data) {
+cellSchema.statics.updateCell = async function (idint, data) {
   try {
-    const cell = await this.findOneAndUpdate({ indint }, data, {
+    const cell = await this.findOneAndUpdate({ idint }, data, {
       new: true,
       runValidators: true,
     });

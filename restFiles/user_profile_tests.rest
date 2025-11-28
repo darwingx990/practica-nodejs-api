@@ -3,24 +3,29 @@ POST http://localhost:3000/api/user-profiles
 Content-Type: application/json
 
 {
-  "profile": "admin"
+  "profile": "Administrador"
 }
+
+### Crear otro perfil de usuario
+POST http://localhost:3000/api/user-profiles
+Content-Type: application/json
+
+{
+  "profile": "Usuario Regular"
+}
+
 ### Obtener todos los perfiles de usuario
 GET http://localhost:3000/api/user-profiles
 
-### Buscar perfiles de usuario
-GET http://localhost:3000/api/user-profiles/search?searchTerm=Admin
-
-### Obtener perfil de usuario por ID (reemplaza 1 con un ID válido)
+### Obtener perfil de usuario por ID interno (idint)
+# Reemplaza 1 con un idint válido del response anterior
 GET http://localhost:3000/api/user-profiles/1
 
-### Actualizar perfil de usuario (reemplaza 1 con un ID válido)
+### Actualizar perfil de usuario
+# Reemplaza 1 con un idint válido
 PUT http://localhost:3000/api/user-profiles/1
 Content-Type: application/json
 
 {
-  "profile": "Super Administrator"
+  "profile": "Super Administrador"
 }
-
-### Eliminar perfil de usuario (reemplaza 1 con un ID válido)
-DELETE http://localhost:3000/api/user-profiles/1

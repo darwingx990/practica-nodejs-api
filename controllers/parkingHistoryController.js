@@ -1,4 +1,4 @@
-import parkingHistory from '../models/parkingHistory.js';
+const parkingHistory = require('../models/parkingHistory');
 
 // Crear un nuevo registro de historial de parqueo
 const create = async (req, res) => {
@@ -36,7 +36,7 @@ const create = async (req, res) => {
   }
 };
 // Obtener todos los registros de historial de parqueo
-const findAll = async (req,res) => {
+const findAll = async (req, res) => {
   try {
     // Obtener todos los registros
     const parkingHistories = await parkingHistory.find().sort({ createdAt: -1 });
@@ -99,7 +99,7 @@ const findById = async (req, res) => {
     });
   }
 }
-  
+
 // Buscar registros de historial de parqueo por término en observaciones
 const searchByDescription = async (req, res) => {
   try {
@@ -241,7 +241,7 @@ const deleteParkingHistory = async (req, res) => {
 };
 
 // Exportar las funciones del controlador
-export default {
+module.exports = {
   create,
   findAll,
   findById,

@@ -79,11 +79,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     ref: 'UserProfile'
     },
- birth_date: { // Fecha de nacimiento
-    type: Date,
-    required: true
- }
- },{ timestamps: true, // Agregar campos createdAt y updatedAt automáticamente
+}, {
+  timestamps: true, // Agregar campos createdAt y updatedAt automáticamente
      collection: 'user' // Nombre de la colección en MongoDB
  }
  );
@@ -131,8 +128,7 @@ userSchema.statics.create = async function(data) {
       profile_photo: user.profile_photo,
       status: user.status,
       password: user.password,
-      userProfileId: user.userProfileId,
-      birth_date: user.birth_date
+      userProfileId: user.userProfileId
     };
   } catch (error) {
     // Lanzar error con mensaje descriptivo
@@ -159,8 +155,7 @@ userSchema.statics.findAll = async function() {
       profile_photo: user.profile_photo,
       status: user.status,
       password: user.password,
-      userProfileId: user.userProfileId,
-      birth_date: user.birth_date
+      userProfileId: user.userProfileId
     }));
   } catch (error) {
     // Lanzar error si ocurre algún problema en la consulta
@@ -258,8 +253,7 @@ userSchema.statics.update = async function(idint, data) {
       profile_photo: user.profile_photo,
       status: user.status,
       password: user.password,
-      userProfileId: user.userProfileId,
-      birth_date: user.birth_date
+      userProfileId: user.userProfileId
     };
   } catch (error) {
     // Lanzar error con mensaje descriptivo
@@ -289,9 +283,8 @@ userSchema.statics.delete = async function(idint) {
       phone_number: result.phone_number,
       profile_photo: result.profile_photo,
       status: result.status,
-      password: result.password,
-      userProfileId: result.userProfileId,
-      birth_date: result.birth_date
+      // password: result.password,
+      userProfileId: result.userProfileId
     };
   } catch (error) {
     // Lanzar error con mensaje descriptivo

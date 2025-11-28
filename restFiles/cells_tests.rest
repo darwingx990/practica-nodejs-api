@@ -1,0 +1,34 @@
+### Crear una celda de parqueo
+POST http://localhost:3000/api/cells
+Content-Type: application/json
+
+{
+  "type": "Moto",
+  "state": "Disponible"
+}
+
+### Obtener todas las celdas
+GET http://localhost:3000/api/cells
+
+### Obtener celda por ID interno (idint)
+# Reemplaza 1 con un idint válido
+GET http://localhost:3000/api/cells/1
+
+### Actualizar celda por ID interno
+# Reemplaza 1 con un idint válido
+PUT http://localhost:3000/api/cells/1
+Content-Type: application/json
+
+{
+  "type": "Carro",
+  "state": "Ocupado"
+}
+
+### Crear otra celda para pruebas
+POST http://localhost:3000/api/cells
+Content-Type: application/json
+
+{
+  "type": "Carro",
+  "state": "Disponible"
+}

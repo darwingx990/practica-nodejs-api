@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
     "data": {
-        "date": "2023-10-27T10:00:00.000Z",
+        "date": "2025-10-27T10:00:00.000Z",
         "VehiculeId": 123,
         "IncidencyId": 1
     }
@@ -26,11 +26,11 @@ PUT http://localhost:3000/api/incidency-reports/1
 Content-Type: application/json
 
 {
-    "date": "2023-10-28T12:00:00.000Z",
+    "date": "2026-10-28T12:00:00.000Z",
     "VehiculeId": 123,
     "IncidencyId": 2
 }
 
 ### Delete Incidency Report
 # Replace :id with a valid ID
-DELETE http://localhost:3000/api/incidency-reports/3
+DELETE http://localhost:3000/api/incidency-reports/19

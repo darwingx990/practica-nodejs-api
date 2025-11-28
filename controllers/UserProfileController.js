@@ -1,4 +1,4 @@
-const UserProfile = require("../models/userProfile.model");
+const UserProfile = require("../models/userProfileModel");
 
 // ======================================================
 // Create new user profile
@@ -13,7 +13,7 @@ exports.createUserProfile = async (req, res) => {
         .json({ message: "The field 'profile' is required." });
     }
 
-    const newProfile = await UserProfile.createProfile(data);
+    const newProfile = await UserProfile.create(data);
 
     res.status(201).json(newProfile);
   } catch (error) {

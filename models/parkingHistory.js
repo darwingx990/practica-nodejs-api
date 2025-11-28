@@ -5,7 +5,6 @@ const counterSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
     seq: { type: Number, default: 0 }
 });
-
 const Counter = mongoose.models.Counter || mongoose.model('Counter', counterSchema);
 
 const ParkingHistorySchema = new mongoose.Schema({
@@ -19,7 +18,6 @@ const ParkingHistorySchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
-
 // Pre-save hook to auto-increment idint
 ParkingHistorySchema.pre('save', async function(next) {
     if (this.isNew) {
@@ -38,7 +36,6 @@ ParkingHistorySchema.pre('save', async function(next) {
         next();
     }
 });
-
 // Crear el modelo
 const ParkingHistory = mongoose.models.ParkingHistory || mongoose.model('ParkingHistory', ParkingHistorySchema);
 

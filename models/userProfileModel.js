@@ -45,7 +45,7 @@ userProfileSchema.pre("save", async function (next) {
 //STATIC METHODS
 
 // Create a new User Profile
-userProfileSchema.statics.createProfile = async function (data) {
+userProfileSchema.statics.create = async function (data) {
   try {
     const profile = new this(data);
     await profile.save();
@@ -62,7 +62,7 @@ userProfileSchema.statics.createProfile = async function (data) {
 // Get all user profiles
 userProfileSchema.statics.findAll = async function () {
   try {
-    const profiles = await this.find().sort({ profile: 1 });
+    const profiles = await this.find().sort({ idint: 1 });
 
     return profiles.map((profile) => ({
       idint: profile.idint,
@@ -92,20 +92,20 @@ userProfileSchema.statics.findByIdint = async function (idint) {
 };
 
 // Search by description (profile name)
-userProfileSchema.statics.searchByDescription = async function (searchTerm) {
-  try {
-    const profiles = await this.find({
-      profile: { $regex: searchTerm, $options: "i" },
-    }).sort({ profile: 1 });
+// userProfileSchema.statics.searchByDescription = async function (searchTerm) {
+//   try {
+//     const profiles = await this.find({
+//       profile: { $regex: searchTerm, $options: "i" },
+//     }).sort({ profile: 1 });
 
-    return profiles.map((profile) => ({
-      idint: profile.idint,
-      profile: profile.profile,
-    }));
-  } catch (error) {
-    throw new Error(`Error searching user profiles: ${error.message}`);
-  }
-};
+//     return profiles.map((profile) => ({
+//       idint: profile.idint,
+//       profile: profile.profile,
+//     }));
+//   } catch (error) {
+//     throw new Error(`Error searching user profiles: ${error.message}`);
+//   }
+// };
 
 // Update a user profile
 userProfileSchema.statics.updateProfile = async function (idint, data) {

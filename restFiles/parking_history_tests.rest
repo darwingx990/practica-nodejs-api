@@ -1,0 +1,53 @@
+### Crear un registro de Parking History
+POST http://localhost:3000/api/parking-history
+Content-Type: application/json
+
+{
+  "placa": "ABC123",
+  "check_in": "2024-11-28T08:00:00Z",
+  "check_out": "2024-11-28T12:00:00Z",
+  "licensePlate": "ABC123",
+  "cost": 10.50,
+  "observaciones": "Vehículo parqueado en zona A"
+}
+
+### Crear otro registro
+POST http://localhost:3000/api/parking-history
+Content-Type: application/json
+
+{
+  "placa": "XYZ789",
+  "check_in": "2024-11-28T09:00:00Z",
+  "check_out": "2024-11-28T18:00:00Z",
+  "licensePlate": "XYZ789",
+  "cost": 25.00,
+  "observaciones": "Vehículo parqueado en zona B, día completo"
+}
+
+### Obtener todos los registros de Parking History
+GET http://localhost:3000/api/parking-history
+
+### Obtener un registro por ID (idint)
+# Reemplaza 1 con un idint válido del response anterior
+GET http://localhost:3000/api/parking-history/1
+
+### Buscar registros por término en observaciones o placa
+GET http://localhost:3000/api/parking-history/search?term=zona
+
+### Actualizar un registro por ID
+# Reemplaza 1 con un idint válido
+PUT http://localhost:3000/api/parking-history/1
+Content-Type: application/json
+
+{
+  "placa": "ABC123",
+  "check_in": "2024-11-28T08:00:00Z",
+  "check_out": "2024-11-28T14:00:00Z",
+  "licensePlate": "ABC123",
+  "cost": 15.00,
+  "observaciones": "Vehículo parqueado en zona A, tiempo extendido"
+}
+
+### Eliminar un registro por ID
+# Reemplaza 2 con un idint válido
+DELETE http://localhost:3000/api/parking-history/2

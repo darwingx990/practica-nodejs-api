@@ -1,0 +1,40 @@
+### Crear un registro de Pico y Placa
+POST http://localhost:3000/api/pico-placa
+Content-Type: application/json
+
+{
+  "placa": "ABC123",
+  "fecha": "2024-11-28T10:00:00Z",
+  "restriccion": true,
+  "observaciones": "Vehículo restringido por pico y placa - Terminación 3 y 4"
+}
+
+### Crear otro registro
+POST http://localhost:3000/api/pico-placa
+Content-Type: application/json
+
+{
+  "placa": "XYZ789",
+  "fecha": "2024-11-28T10:00:00Z",
+  "restriccion": false,
+  "observaciones": "Vehículo sin restricción"
+}
+
+### Obtener todos los registros de Pico y Placa
+GET http://localhost:3000/api/pico-placa
+
+### Actualizar un registro de Pico y Placa por ID de MongoDB
+# Reemplaza el ID con un _id válido del response anterior (formato: 507f1f77bcf86cd799439011)
+PUT http://localhost:3000/api/pico-placa/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+{
+  "placa": "ABC123",
+  "fecha": "2024-11-28T10:00:00Z",
+  "restriccion": false,
+  "observaciones": "Restricción levantada - Día festivo"
+}
+
+### Eliminar un registro de Pico y Placa por ID de MongoDB
+# Reemplaza el ID con un _id válido
+DELETE http://localhost:3000/api/pico-placa/507f1f77bcf86cd799439011

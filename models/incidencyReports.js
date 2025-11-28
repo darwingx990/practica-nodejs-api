@@ -17,45 +17,46 @@ const incidencyReportsSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true
+        required: true // maps to fecha_hora
     },
-    VehiculeId: {
-        Number
-    },
-    IncidencyId: {
+    vehicleId: {
         type: Number,
-        required: true
+        ref: 'Vehicle',
+        required: true,
+        index: true
+    },
+    incidentId: {
+        type: Number,
+        ref: 'Incident',
+        required: true,
+        index: true
     }
-}, { timestamps: true }
-);
+}, { timestamps: true });
 
 // Pre-save hook to auto-increment idint beofore saving a new incidency report.
 incidencyReportsSchema.pre('save', async function (next) {
-    if (this.isNew) {
-        try {
-            const counter = await Counter.findByIdAndUpdate(
-                'idint',
-                { $inc: { seq: 1 } },
-                { new: true, upsert: true }
-            );
-            this.idint = counter.seq;
-        } catch (error) {
-            return next(error);
-        }
-    }
-    next();
+    if (!this.isNew) return next();
+    try {
+        const counter = await Counter.findByIdAndUpdate(
+            'idint',
+            { $inc: { seq: 1 } },
+            { new: true, upsert: true }
+        );
+        this.idint = counter.seq;
+        next();
+    } catch (err) { next(err); }
 });
 
 // Create a new user profile function
-incidencyReportsSchema.statics.create = async function (data) {
+incidencyReportsSchema.statics.create = async function (reportData) {
     try {
-        const report = new this(data);
+        const report = new this(reportData);
         await report.save();
         return {
             idint: report.idint,
             date: report.date,
-            VihiculeId: report.VihiculeId,
-            incidencyId: report.incidencyId
+            vehicleId: report.vehicleId,
+            incidentId: report.incidentId
         };
     } catch (error) {
         throw new Error(`There was an error creating the report: ${error.message}`);
@@ -70,8 +71,8 @@ incidencyReportsSchema.statics.findAll = async function () {
         return report.map(report => ({
             idint: report.idint,
             date: report.date,
-            VihiculeId: report.VihiculeId,
-            incidencyId: report.incidencyId
+            vehicleId: report.vehicleId,
+            incidentId: report.incidentId
         }));
     } catch (error) {
         throw new Error(`Error when getting the reports: ${error.message}`);
@@ -88,27 +89,13 @@ incidencyReportsSchema.statics.findById = async function (idint) {
         return {
             idint: report.idint,
             date: report.date,
-            VihiculeId: report.VihiculeId,
-            incidencyId: report.incidencyId
+            vehicleId: report.vehicleId,
+            incidentId: report.incidentId
         };
     } catch (error) {
         throw new Error(`Error when gettingh the report: ${error.message}`);
     }
 };
-
-// incidencyReportsSchemaema.statics.searchByDescription = async function (searchTerm) {
-//     try {
-//         const perfiles = await this.find({
-//             perfil: { $regex: searchTerm, $options: 'i' }
-//         }).sort({ perfil: 1 });
-//         return perfiles.map(perfil => ({
-//             idint: perfil.idint,
-//             perfil: perfil.perfil
-//         }));
-//     } catch (error) {
-//         throw new Error(`Error al buscar perfiles de usuario: ${error.message}`);
-//     }
-// };
 
 // Function to update a report by idint
 incidencyReportsSchema.statics.update = async function (idint, data) {
@@ -123,7 +110,9 @@ incidencyReportsSchema.statics.update = async function (idint, data) {
         }
         return {
             idint: report.idint,
-            report: report.report
+            date: report.date,
+            vehicleId: report.vehicleId,
+            incidentId: report.incidentId
         };
     } catch (error) {
         throw new Error(`Error to update the report: ${error.message}`);
@@ -142,8 +131,8 @@ incidencyReportsSchema.statics.delete = async function (idint) {
         return {
             idint: report.idint,
             date: report.date,
-            VihiculeId: report.VihiculeId,
-            incidencyId: report.incidencyId
+            vehicleId: report.vehicleId,
+            incidentId: report.incidentId
         };
     } catch (error) {
         throw new Error(`Error to delete the report: ${error.message}`);
