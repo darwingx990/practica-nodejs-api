@@ -1,143 +1,149 @@
-//comentar cada codigo automaticamente para que sea entendible
-
+// Importar mongoose para trabajar con MongoDB
 const mongoose = require('mongoose');
 
-// autoincremental schema para el contador
+// Esquema para el contador autoincremental
+// Este esquema maneja los contadores para IDs únicos
 const counterSchema = new mongoose.Schema({
-    _id: { type: String, required: true },
-    seq: { type: Number, default: 0 }
+  _id: { type: String, required: true }, // Identificador único del contador
+  seq: { type: Number, default: 0 } // Valor del contador, inicia en 0
 });
 
+// Crear o reutilizar el modelo Counter para manejar autoincremento
 const Counter = mongoose.models.Counter || mongoose.model('Counter', counterSchema);
 
+// Definir el esquema principal para el perfil de usuario
+// Este esquema define la estructura de datos para los perfiles de usuario en la base de datos
 const userProfileSchema = new mongoose.Schema({
-    idint: {
-        type: Number,
-        unique: true
+    profile_id: { // ID único autoincremental del perfil de usuario
+      type: Number,
+      unique: true
     },
-    perfil: {
-        type: String,
-        required: true,
-        trim: true
+    profile: { // Nombre o descripción del perfil
+      type: String,
+      required: true,
+      trim: true
     }
-}, { timestamps: true }
-);
+  },{ timestamps: true} // Agregar campos createdAt y updatedAt automáticamente
+  );
 
-//pre-save hook para establecer idint
-userProfileSchema.pre('save', async function (next) {
-    if (this.isNew) {
-        try {
-            const counter = await Counter.findByIdAndUpdate(
-                'idint',
-                { $inc: { seq: 1 } },
-                { new: true, upsert: true }
-            );
-            this.idint = counter.seq;
-        } catch (error) {
-            return next(error);
-        }
-    }
-    next();
-});
+// Hook pre-save para establecer el profile_id automáticamente
+// Este hook se ejecuta antes de guardar un nuevo perfil de usuario
+userProfileSchema.pre('save', async function(next) {
+     if (this.isNew) {
+         try {
+             const counter = await Counter.findByIdAndUpdate(
+                 'profile_id',
+                 { $inc: { seq: 1 } },
+                 { new: true, upsert: true }
+             );
+             this.profile_id = counter.seq;
+         } catch (error) {
+             return next(error);
+         }
+     }
+     next();
+ });
 
-//funcion para crear un nuevo perfil de user metodo estadistico par mantener la API similar
-userProfileSchema.statics.create = async function (data) {
-    try {
-        const userProfile = new this(data);
-        await userProfile.save();
-        return {
-            idint: userProfile.idint,
-            perfil: userProfile.perfil
-        };
-    } catch (error) {
-        throw new Error(`Error al crear perfil de user: ${error.message}`);
-    }
-};
+// Métodos estáticos para mantener consistencia en la API
+// Estos métodos permiten interactuar con el modelo de manera uniforme
 
-// funcion para obtener todos los perfiles de user metodo estadistico par mantener la API similar
-userProfileSchema.statics.findAll = async function () {
-    try {
-        const perfiles = await this.find().sort({ perfil: 1 });
-        return perfiles.map(perfil => ({
-            idint: perfil.idint,
-            perfil: perfil.perfil
-        }));
-    } catch (error) {
-        throw new Error(`Error al obtener perfiles de user: ${error.message}`);
-    }
-};
+// Método para crear un nuevo perfil de usuario
+userProfileSchema.statics.create = async function(data) {
+     try {
+         const userProfile = new this(data);
+         await userProfile.save();
+         return {
+             profile_id: userProfile.profile_id,
+             profile: userProfile.profile
+         };
+     } catch (error) {
+         throw new Error(`Error creating user profile: ${error.message}`);
+     }
+     };
 
-//buscar byidint metodo estadistico par mantener la API similar sirve para buscar por idint
+    // Método para obtener todos los perfiles de usuario ordenados por nombre
+    userProfileSchema.statics.findAll = async function() {
+     try {
+         const profiles = await this.find().sort({ profile: 1 });
+         return profiles.map(profile => ({
+             profile_id: profile.profile_id,
+             profile: profile.profile
+         }));
+     } catch (error) {
+         throw new Error(`Error retrieving user profiles: ${error.message}`);
+     }
+ };
 
-userProfileSchema.statics.findById = async function (idint) {
-    try {
-        const perfil = await this.findOne({ idint });
-        if (!perfil) {
-            throw new Error('Perfil de user no encontrado');
-        }
-        return {
-            idint: perfil.idint,
-            perfil: perfil.perfil
-        };
-    } catch (error) {
-        throw new Error(`Error al obtener perfil de user: ${error.message}`);
-    }
-};
+// Método para buscar un perfil de usuario específico por su profile_id
+userProfileSchema.statics.findById = async function(profile_id) {
+     try {
+         const profile = await this.findOne({ profile_id });
+         if (!profile) {
+             return null;
+         }
+         return {
+             profile_id: profile.profile_id,
+             profile: profile.profile
+         };
+     } catch (error) {
+         throw new Error(`Error retrieving user profile: ${error.message}`);
+     }
+ };
 
-//funcion searchbydescripcion metodo estadistico par mantener la API similar sirve para buscar por perfil
-userProfileSchema.statics.searchByDescription = async function (searchTerm) {
-    try {
-        const perfiles = await this.find({
-            perfil: { $regex: searchTerm, $options: 'i' }
-        }).sort({ perfil: 1 });
-        return perfiles.map(perfil => ({
-            idint: perfil.idint,
-            perfil: perfil.perfil
-        }));
-    } catch (error) {
-        throw new Error(`Error al buscar perfiles de user: ${error.message}`);
-    }
-};
+// Método para buscar perfiles de usuario por término de búsqueda en el nombre del perfil
+userProfileSchema.statics.searchByDescription = async function(searchTerm) {
+     try {
+         const profiles = await this.find({
+             profile: { $regex: searchTerm, $options: 'i' }
+         }).sort({ profile: 1 });
+         return profiles.map(profile => ({
+             profile_id: profile.profile_id,
+             profile: profile.profile
+         }));
+     } catch (error) {
+         throw new Error(`Error searching user profiles: ${error.message}`);
+     }
+ };
 
-//funcion update perfil de user metodo estadistico par mantener la API similar sirve para actualizar el perfil de user
-userProfileSchema.statics.update = async function (idint, data) {
-    try {
-        const perfil = await this.findOneAndUpdate(
-            { idint },
-            data,
-            { new: true }
-        );
-        if (!perfil) {
-            throw new Error('Perfil de user no encontrado para actualizar');
-        }
-        return {
-            idint: perfil.idint,
-            perfil: perfil.perfil
-        };
-    } catch (error) {
-        throw new Error(`Error al actualizar perfil de user: ${error.message}`);
-    }
-};
+// Método para actualizar un perfil de usuario existente
+userProfileSchema.statics.update = async function(profile_id, data) {
+     try {
+         const profile = await this.findOneAndUpdate(
+             { profile_id },
+             data,
+             { new: true, runValidators: true }
+         );
+         if (!profile) {
+             return null;
+         }
+         return {
+             profile_id: profile.profile_id,
+             profile: profile.profile
+         };
+     } catch (error) {
+         throw new Error(`Error updating user profile: ${error.message}`);
+     }
+ };
 
-//fucncion delete metodo estadistico par mantener la API similar sirve para eliminar el perfil de user
-userProfileSchema.statics.delete = async function (idint) {
-    //verifica si el perfil de user existe antes de eliminarlo
-    try {
-        const perfil = await this.findOneAndDelete({ idint });
-        if (!perfil) {
-            throw new Error('Perfil de user no encontrado para eliminar');
-        }
-        return {
-            idint: perfil.idint,
-            perfil: perfil.perfil
-        };
-    } catch (error) {
-        throw new Error(`Error al eliminar perfil de user: ${error.message}`);
-    }
-};
+// Método para eliminar un perfil de usuario por su ID
+// Verifica que el perfil existe antes de eliminarlo
+userProfileSchema.statics.delete = async function(profile_id) {
+     try {
+         const profile = await this.findOneAndDelete({ profile_id });
+         if (!profile) {
+             return null;
+         }
+         return {
+             profile_id: profile.profile_id,
+             profile: profile.profile
+         };
+     } catch (error) {
+         throw new Error(`Error deleting user profile: ${error.message}`);
+     }
+ };
 
-const userProfile = mongoose.model('userProfile', userProfileSchema);
-module.exports = userProfile;
-
+const UserProfile = mongoose.model('UserProfile', userProfileSchema);
+module.exports = UserProfile;
+  
 
 

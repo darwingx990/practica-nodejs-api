@@ -1,0 +1,40 @@
+### Crear un usuario
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "document_type": "CC",
+  "document_number": "123456789",
+  "first_name": "Juan",
+  "middle_name": "Carlos",
+  "last_name": "Pérez",
+  "second_last_name": "Gómez",
+  "email": "juan.perez@example.com",
+  "phone_number": "3001234567",
+  "profile_photo": "https://example.com/photo.jpg",
+  "status": "active",
+  "password": "password123",
+  "userProfileId": 1,
+  "birth_date": "1990-01-01T00:00:00.000Z"
+}
+
+### Obtener todos los usuarios
+GET http://localhost:3000/api/users
+
+### Buscar usuarios
+GET http://localhost:3000/api/users/search?searchTerm=Juan
+
+### Obtener usuario por ID (reemplaza 1 con un ID válido)
+GET http://localhost:3000/api/users/1
+
+### Actualizar usuario (reemplaza 1 con un ID válido)
+PUT http://localhost:3000/api/users/1
+Content-Type: application/json
+
+{
+  "first_name": "Juan Updated",
+  "status": "inactive"
+}
+
+### Eliminar usuario (reemplaza 1 con un ID válido)
+DELETE http://localhost:3000/api/users/1

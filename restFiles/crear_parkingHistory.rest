@@ -1,0 +1,37 @@
+### Crear un registro de ParkingHistory
+POST http://localhost:3000/api/parking-history
+Content-Type: application/json
+
+{
+  "placa": "VDI 94H",
+  "check_in": "2023-11-27T10:00:00Z",
+  "check_out": "2023-11-27T12:00:00Z",
+  "licensePlate": "VDI 94H",
+  "cost": 10.50,
+  "observaciones": "Vehículo parqueado en zona A"
+}
+
+### Obtener todos los registros de ParkingHistory
+GET http://localhost:3000/api/parking-history
+
+### Obtener un registro por ID
+GET http://localhost:3000/api/parking-history/1
+
+### Buscar registros por término en observaciones
+GET http://localhost:3000/api/parking-history/search?term=zona
+
+### Actualizar un registro por ID
+PUT http://localhost:3000/api/parking-history/1
+Content-Type: application/json
+
+{
+  "placa": "VDI 94H",
+  "check_in": "2023-11-27T10:00:00Z",
+  "check_out": "2023-11-27T14:00:00Z",
+  "licensePlate": "VDI 94H",
+  "cost": 15.00,
+  "observaciones": "Vehículo parqueado en zona A, tiempo extendido"
+}
+
+### Eliminar un registro por ID
+DELETE http://localhost:3000/api/parking-history/1

@@ -1,11 +1,11 @@
 ### Root Endpoint
-GET http://localhost:3001/
+GET http://localhost:3000/
 
 ### Get All Incidency Reports
-GET http://localhost:3001/api/incidency-reports
+GET http://localhost:3000/api/incidency-reports
 
 ### Create Incidency Report
-POST http://localhost:3001/api/incidency-reports
+POST http://localhost:3000/api/incidency-reports
 Content-Type: application/json
 
 {
@@ -18,11 +18,11 @@ Content-Type: application/json
 
 ### Get Incidency Report by ID
 # Replace :id with a valid ID from the Get All response (e.g., 1)
-GET http://localhost:3001/api/incidency-reports/1
+GET http://localhost:3000/api/incidency-reports/1
 
 ### Update Incidency Report
 # Replace :id with a valid ID
-PUT http://localhost:3001/api/incidency-reports/1
+PUT http://localhost:3000/api/incidency-reports/1
 Content-Type: application/json
 
 {
@@ -33,4 +33,4 @@ Content-Type: application/json
 
 ### Delete Incidency Report
 # Replace :id with a valid ID
-DELETE http://localhost:3001/api/incidency-reports/1
+DELETE http://localhost:3000/api/incidency-reports/3

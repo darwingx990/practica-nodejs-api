@@ -1,0 +1,27 @@
+### Crear un registro de Pico y Placa
+POST http://localhost:3000/api/pico-placa
+Content-Type: application/json
+
+{
+  "placa": "ABC-123",
+  "fecha": "2023-11-27T10:00:00Z",
+  "restriccion": true,
+  "observaciones": "Vehículo restringido por pico y placa"
+}
+
+### Obtener todos los registros de Pico y Placa
+GET http://localhost:3000/api/pico-placa
+
+### Actualizar un registro de Pico y Placa por ID
+PUT http://localhost:3000/api/pico-placa/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+{
+  "placa": "ABC-123",
+  "fecha": "2023-11-27T10:00:00Z",
+  "restriccion": false,
+  "observaciones": "Restricción levantada"
+}
+
+### Eliminar un registro de Pico y Placa por ID
+DELETE http://localhost:3000/api/pico-placa/507f1f77bcf86cd799439011

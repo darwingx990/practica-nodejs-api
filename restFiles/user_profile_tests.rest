@@ -1,0 +1,26 @@
+### Crear un perfil de usuario (ejecuta esto primero)
+POST http://localhost:3000/api/user-profiles
+Content-Type: application/json
+
+{
+  "profile": "admin"
+}
+### Obtener todos los perfiles de usuario
+GET http://localhost:3000/api/user-profiles
+
+### Buscar perfiles de usuario
+GET http://localhost:3000/api/user-profiles/search?searchTerm=Admin
+
+### Obtener perfil de usuario por ID (reemplaza 1 con un ID válido)
+GET http://localhost:3000/api/user-profiles/1
+
+### Actualizar perfil de usuario (reemplaza 1 con un ID válido)
+PUT http://localhost:3000/api/user-profiles/1
+Content-Type: application/json
+
+{
+  "profile": "Super Administrator"
+}
+
+### Eliminar perfil de usuario (reemplaza 1 con un ID válido)
+DELETE http://localhost:3000/api/user-profiles/1
