@@ -6,7 +6,7 @@ Content-Type: application/json
   "movement": "Entrada",
   "door": "Puerta Principal",
   "dateTime": "2024-11-28T10:00:00Z",
-  "vehicleId": "ABC123",
+  "vehiculeId": "ABC123",
   "userId": 1
 }
 
@@ -18,7 +18,7 @@ Content-Type: application/json
   "movement": "Salida",
   "door": "Puerta Lateral",
   "dateTime": "2024-11-28T15:00:00Z",
-  "vehicleId": "ABC123",
+  "vehiculeId": "ABC123",
   "userId": 1
 }
 

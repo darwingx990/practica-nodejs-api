@@ -41,9 +41,9 @@ const accessExitSchema = new mongoose.Schema({
     trim: true,
   },
 
-  vehicleId: {
+  vehiculeId: {
     type: Number,
-    ref: 'Vehicle',
+    ref: 'vehicule',
     required: true,
     index: true
   }

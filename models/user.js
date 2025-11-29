@@ -2,7 +2,7 @@
 // Importar mongoose para trabajar con MongoDB
 const mongoose = require('mongoose');
 // Importar el modelo de perfil de usuario para referencias
-const PerfilUsuario = require('./userProfile');
+const PerfilUsuario = require('./userProfileModel');
 
 // Esquema para el contador autoincremental
 // Este esquema maneja los contadores para IDs únicos
@@ -17,77 +17,77 @@ const Counter = mongoose.models.Counter || mongoose.model('Counter', counterSche
 // Definir el esquema principal para el usuario
 // Este esquema define la estructura de datos para los usuarios en la base de datos
 const userSchema = new mongoose.Schema({
-    idint: { // ID único autoincremental del usuario
+  idint: { // ID único autoincremental del usuario
     type: Number,
     unique: true
-   },
-    document_type: { // Tipo de documento (ej: CC, TI, etc.)
+  },
+  document_type: { // Tipo de documento (ej: CC, TI, etc.)
     type: String,
     required: true,
     trim: true
-    },
-    document_number: { // Número del documento de identidad
+  },
+  document_number: { // Número del documento de identidad
     type: String,
     required: true,
     trim: true
-    },
-    first_name: { // Primer nombre del usuario
+  },
+  first_name: { // Primer nombre del usuario
     type: String,
     required: true,
     trim: true
-    },
-    middle_name: { // Segundo nombre (opcional)
+  },
+  middle_name: { // Segundo nombre (opcional)
     type: String,
     trim: true
-    },
-    last_name: { // Primer apellido
+  },
+  last_name: { // Primer apellido
     type: String,
     required: true,
     trim: true
-    },
-    second_last_name: { // Segundo apellido (opcional)
+  },
+  second_last_name: { // Segundo apellido (opcional)
     type: String,
     trim: true
-    },
-    email: { // Correo electrónico único
+  },
+  email: { // Correo electrónico único
     type: String,
     required: true,
     trim: true,
     unique: true
-    },
-    phone_number: { // Número de teléfono
+  },
+  phone_number: { // Número de teléfono
     type: String,
     required: true,
     trim: true
-    },
-    profile_photo: { // URL o path de la foto de perfil (opcional)
+  },
+  profile_photo: { // URL o path de la foto de perfil (opcional)
     type: String,
     trim: true
-    },
-    status: { // Estado del usuario (activo, inactivo, etc.)
-    type: String,
-    required: true,
-    trim: true
-    },
-    password: { // Contraseña encriptada
+  },
+  status: { // Estado del usuario (activo, inactivo, etc.)
     type: String,
     required: true,
     trim: true
-    },
-    userProfileId: { // ID del perfil de usuario (referencia)
+  },
+  password: { // Contraseña encriptada
+    type: String,
+    required: true,
+    trim: true
+  },
+  userProfileId: { // ID del perfil de usuario (referencia)
     type: Number,
     required: true,
-    ref: 'UserProfile'
-    },
+    ref: 'userProfileModel'
+  },
 }, {
   timestamps: true, // Agregar campos createdAt y updatedAt automáticamente
-     collection: 'user' // Nombre de la colección en MongoDB
- }
- );
+  collection: 'user' // Nombre de la colección en MongoDB
+}
+);
 
 // Hook pre-save para establecer el idint automáticamente
 // Este hook se ejecuta antes de guardar un nuevo usuario
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (this.isNew) { // Solo para documentos nuevos
     try {
       // Incrementar el contador y obtener el nuevo valor
@@ -108,7 +108,7 @@ userSchema.pre('save', async function(next) {
 // Estos métodos permiten interactuar con el modelo de manera uniforme
 
 // Método para crear un nuevo usuario
-userSchema.statics.create = async function(data) {
+userSchema.statics.create = async function (data) {
   try {
     // Crear nueva instancia del modelo
     const user = new this(data);
@@ -137,7 +137,7 @@ userSchema.statics.create = async function(data) {
 };
 
 // Método para obtener todos los usuarios ordenados por nombre
-userSchema.statics.findAll = async function() {
+userSchema.statics.findAll = async function () {
   try {
     // Buscar todos los usuarios y ordenar por first_name ascendente
     const users = await this.find().sort({ first_name: 1 });
@@ -164,7 +164,7 @@ userSchema.statics.findAll = async function() {
 };
 
 // Método para buscar un usuario específico por su idint
-userSchema.statics.findById = async function(idint) {
+userSchema.statics.findById = async function (idint) {
   try {
     // Buscar un usuario por su ID único
     const user = await this.findOne({ idint });
@@ -193,7 +193,7 @@ userSchema.statics.findById = async function(idint) {
 };
 
 // Método para buscar usuarios por término de búsqueda en campos específicos
-userSchema.statics.searchByDescription = async function(searchTerm) {
+userSchema.statics.searchByDescription = async function (searchTerm) {
   try {
     // Buscar usuarios donde el término coincida con nombre, apellido o email (insensible a mayúsculas)
     const users = await this.find({
@@ -227,7 +227,7 @@ userSchema.statics.searchByDescription = async function(searchTerm) {
 };
 
 // Método para actualizar un usuario existente
-userSchema.statics.update = async function(idint, data) {
+userSchema.statics.update = async function (idint, data) {
   try {
     // Buscar y actualizar el usuario por su ID, retornando el documento actualizado
     const user = await this.findOneAndUpdate(
@@ -262,7 +262,7 @@ userSchema.statics.update = async function(idint, data) {
 };
 
 // Método para eliminar un usuario por su ID
-userSchema.statics.delete = async function(idint) {
+userSchema.statics.delete = async function (idint) {
   try {
     // Buscar y eliminar el usuario, retornando el documento eliminado
     const result = await this.findOneAndDelete({ idint });

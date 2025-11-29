@@ -19,15 +19,15 @@ const incidencyReportsSchema = new mongoose.Schema({
         type: Date,
         required: true // maps to fecha_hora
     },
-    vehicleId: {
+    vehiculeId: {
         type: Number,
-        ref: 'Vehicle',
+        ref: 'Vehicule',
         required: true,
         index: true
     },
     incidentId: {
         type: Number,
-        ref: 'Incident',
+        ref: 'incidentModel',
         required: true,
         index: true
     }
@@ -55,7 +55,7 @@ incidencyReportsSchema.statics.create = async function (reportData) {
         return {
             idint: report.idint,
             date: report.date,
-            vehicleId: report.vehicleId,
+            vehiculeId: report.vehiculeId,
             incidentId: report.incidentId
         };
     } catch (error) {
@@ -71,7 +71,7 @@ incidencyReportsSchema.statics.findAll = async function () {
         return report.map(report => ({
             idint: report.idint,
             date: report.date,
-            vehicleId: report.vehicleId,
+            vehiculeId: report.vehiculeId,
             incidentId: report.incidentId
         }));
     } catch (error) {
@@ -89,7 +89,7 @@ incidencyReportsSchema.statics.findById = async function (idint) {
         return {
             idint: report.idint,
             date: report.date,
-            vehicleId: report.vehicleId,
+            vehiculeId: report.vehiculeId,
             incidentId: report.incidentId
         };
     } catch (error) {
@@ -111,7 +111,7 @@ incidencyReportsSchema.statics.update = async function (idint, data) {
         return {
             idint: report.idint,
             date: report.date,
-            vehicleId: report.vehicleId,
+            vehiculeId: report.vehiculeId,
             incidentId: report.incidentId
         };
     } catch (error) {
@@ -131,7 +131,7 @@ incidencyReportsSchema.statics.delete = async function (idint) {
         return {
             idint: report.idint,
             date: report.date,
-            vehicleId: report.vehicleId,
+            vehiculeId: report.vehiculeId,
             incidentId: report.incidentId
         };
     } catch (error) {

@@ -43,7 +43,7 @@ const create = async (req, res) => {
       tiempo_estadia = "0";
 
     } else if (movimiento === "salida") {
-      // Find the latest historial_parqueo for the vehicle
+      // Find the latest historial_parqueo for the vehicule
       const historial = await historial_parqueo.findOne({ id_vehiculo }).sort({ fecha_hora: -1 });
       if (!historial) {
         return res.status(400).json({

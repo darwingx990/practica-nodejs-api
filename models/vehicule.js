@@ -8,8 +8,8 @@ const counterSchema = new mongoose.Schema({
 
 const Counter = mongoose.models.Counter || mongoose.model('Counter', counterSchema);
 
-// Vehicle schema (VEHICULO in the ERD)
-const vehicleSchema = new mongoose.Schema({
+// vehicule schema (VEHICULO in the ERD)
+const vehiculeSchema = new mongoose.Schema({
     idint: {
         type: Number,
         unique: true
@@ -43,18 +43,18 @@ const vehicleSchema = new mongoose.Schema({
     },
     userId: {
         type: Number,
-        ref: 'User',
+        ref: 'user',
         required: true,
         index: true
     }
 }, { timestamps: true });
 
 // Auto-increment idint before save
-vehicleSchema.pre('save', async function (next) {
+vehiculeSchema.pre('save', async function (next) {
     if (!this.isNew) return next();
     try {
         const counter = await Counter.findByIdAndUpdate(
-            'vehicle_id',
+            'vehicule_id',
             { $inc: { seq: 1 } },
             { new: true, upsert: true }
         );
@@ -65,45 +65,45 @@ vehicleSchema.pre('save', async function (next) {
     }
 });
 
-vehicleSchema.statics.create = async function (data) {
+vehiculeSchema.statics.create = async function (data) {
     try {
-        const vehicle = new this(data);
-        await vehicle.save();
-        return vehicle;
+        const vehicule = new this(data);
+        await vehicule.save();
+        return vehicule;
     } catch (error) {
-        throw new Error(`Error creating vehicle: ${error.message}`);
+        throw new Error(`Error creating vehicule: ${error.message}`);
     }
 };
 
-vehicleSchema.statics.findAll = async function () {
+vehiculeSchema.statics.findAll = async function () {
     try {
         return await this.find().sort({ idint: 1 });
     } catch (error) {
-        throw new Error(`Error finding vehicles: ${error.message}`);
+        throw new Error(`Error finding vehicules: ${error.message}`);
     }
 };
 
-vehicleSchema.statics.findByIdInt = async function (idint) {
-    const vehicle = await this.findOne({ idint });
-    if (!vehicle) throw new Error('Vehicle not found');
-    return vehicle;
+vehiculeSchema.statics.findByIdInt = async function (idint) {
+    const vehicule = await this.findOne({ idint });
+    if (!vehicule) throw new Error('vehicule not found');
+    return vehicule;
 };
 
-vehicleSchema.statics.updateVehicle = async function (idint, data) {
+vehiculeSchema.statics.updatevehicule = async function (idint, data) {
     const updated = await this.findOneAndUpdate({ idint }, data, {
         new: true,
         runValidators: true
     });
-    if (!updated) throw new Error('Vehicle not found to update');
+    if (!updated) throw new Error('vehicule not found to update');
     return updated;
 };
 
-vehicleSchema.statics.deleteVehicle = async function (idint) {
+vehiculeSchema.statics.deletevehicule = async function (idint) {
     const deleted = await this.findOneAndDelete({ idint });
-    if (!deleted) throw new Error('Vehicle not found to delete');
+    if (!deleted) throw new Error('vehicule not found to delete');
     return deleted;
 };
 
-const Vehicle = mongoose.models.Vehicle || mongoose.model('Vehicle', vehicleSchema);
+const vehicule = mongoose.models.vehicule || mongoose.model('vehicule', vehiculeSchema);
 
-module.exports = Vehicle;
+module.exports = vehicule;
