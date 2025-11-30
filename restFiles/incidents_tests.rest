@@ -19,7 +19,7 @@ GET http://localhost:3000/api/incidents/incidents
 
 ### Actualizar incidente por ID interno
 # Reemplaza 1 con un idint válido
-PUT http://localhost:3000/api/incidents/incidents/1
+PUT http://localhost:3000/api/incidents/incidents/15
 Content-Type: application/json
 
 {
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 ### Eliminar incidente por ID interno
 # Reemplaza 2 con un idint válido
-DELETE http://localhost:3000/api/incidents/incidents/2
+DELETE http://localhost:3000/api/incidents/incidents/14
 
 ###
 ### NOTA: Los endpoints de incident-reports no están implementados

@@ -10,19 +10,19 @@ Content-Type: application/json
 
 {
     "data": {
-        "date": "2025-10-27T10:00:00.000Z",
-        "VehiculeId": 123,
-        "IncidencyId": 1
+    "date": "2025-10-27T10:00:00.000Z",
+    "vehiculeId": 123,
+    "incidentId": 1
     }
 }
 
 ### Get Incidency Report by ID
 # Replace :id with a valid ID from the Get All response (e.g., 1)
-GET http://localhost:3000/api/incidency-reports/1
+GET http://localhost:3000/api/incidency-reports/18
 
 ### Update Incidency Report
 # Replace :id with a valid ID
-PUT http://localhost:3000/api/incidency-reports/1
+PUT http://localhost:3000/api/incidency-reports/18
 Content-Type: application/json
 
 {

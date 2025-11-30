@@ -19,6 +19,7 @@ const userProfileSchema = new mongoose.Schema(
     profile: {
       type: String,
       required: true,
+      unique: true,
       trim: true,
     },
   },

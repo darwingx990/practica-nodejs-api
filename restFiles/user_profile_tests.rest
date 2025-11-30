@@ -11,7 +11,7 @@ POST http://localhost:3000/api/user-profiles
 Content-Type: application/json
 
 {
-  "profile": "Usuario Regular"
+  "profile": "Usuario"
 }
 
 ### Obtener todos los perfiles de usuario
@@ -23,7 +23,7 @@ GET http://localhost:3000/api/user-profiles/1
 
 ### Actualizar perfil de usuario
 # Reemplaza 1 con un idint válido
-PUT http://localhost:3000/api/user-profiles/1
+PUT http://localhost:3000/api/user-profiles/10
 Content-Type: application/json
 
 {

@@ -14,6 +14,7 @@ const userProfileRoutes = require('./routes/userProfileRoutes');
 const picoPlacaRoutes = require('./routes/picoPlacaRoutes');
 const parkingHistoryRoutes = require('./routes/parkingHistoryRoutes');
 const userRoutes = require('./routes/userRoutes');
+const vehiculeRoutes = require('./routes/vehiculeRoutes');
 const incidentRoutes = require('./routes/incidentRoutes');
 
 // Create an Express application
@@ -38,6 +39,7 @@ app.use('/api/user-profiles', userProfileRoutes);
 app.use('/api/pico-placa', picoPlacaRoutes);
 app.use('/api/parking-history', parkingHistoryRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/vehicules', vehiculeRoutes);
 app.use('/api/incidents', incidentRoutes);
 
 // Root endpoint to verify API is running
@@ -82,6 +84,11 @@ app.get('/', (req, res) => {
                 description: "Manage users",
                 methods: ['POST', 'GET', 'GET /search', 'GET /:id', 'PUT /:id', 'DELETE /:id']
             },
+            vehicules: {
+                base: "/api/vehicules",
+                description: "Manage vehicules",
+                methods: ['POST', 'GET', 'GET /:idint', 'PUT /:idint', 'DELETE /:idint']
+            },
             incidents: {
                 base: "/api/incidents",
                 description: "Manage incidents and incident reports",
@@ -106,6 +113,7 @@ app.use('*', (req, res) => {
             '/api/pico-placa/*',
             '/api/parking-history/*',
             '/api/users/*',
+            '/api/vehicules/*',
             '/api/incidents/*'
         ]
     });

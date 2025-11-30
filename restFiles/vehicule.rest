@@ -1,0 +1,47 @@
+### Create a vehicule
+POST http://localhost:3000/api/vehicules
+Content-Type: application/json
+
+{
+  "plate": "ABC223",
+  "color": "Blue",
+  "model": "2020",
+  "brand": "Toyota",
+  "type": "Car",
+  "userId": 1
+}
+
+### Create another vehicule
+POST http://localhost:3000/api/vehicules
+Content-Type: application/json
+
+{
+  "plate": "XYZ789",
+  "color": "Black",
+  "model": "2018",
+  "brand": "Honda",
+  "type": "Motorcycle",
+  "userId": 2
+}
+
+### Get all vehicules
+GET http://localhost:3000/api/vehicules
+
+### Get vehicule by idint
+# Replace 1 with a valid idint
+GET http://localhost:3000/api/vehicules/3
+
+### Update vehicule by idint
+# Replace 1 with a valid idint
+PUT http://localhost:3000/api/vehicules/1
+Content-Type: application/json
+
+{
+  "color": "Red",
+  "model": "2021",
+  "type": "SUV"
+}
+
+### Delete vehicule by idint
+# Replace 2 with a valid idint
+DELETE http://localhost:3000/api/vehicules/13
