@@ -1,48 +1,139 @@
-// controllers/picoPlacaController.js
 const PicoPlaca = require('../models/picoPlaca');
 
+// CREATE - Crear nuevo registro
 const createPicoPlaca = async (req, res) => {
-  try {
-    const picoPlaca = new PicoPlaca(req.body);
-    await picoPlaca.save();
-    res.status(201).json(picoPlaca);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+    try {
+        const { tipo_vehiculo, numero, dia } = req.body;
+        
+        const nuevoRegistro = new PicoPlaca({
+            tipo_vehiculo,
+            numero,
+            dia
+        });
+
+        const registroGuardado = await nuevoRegistro.save();
+        res.status(201).json({
+            success: true,
+            message: 'Registro creado exitosamente',
+            data: registroGuardado
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al crear registro',
+            error: error.message
+        });
+    }
 };
 
-const getPicoPlaca = async (req, res) => {
-  try {
-    const picoPlacas = await PicoPlaca.find();
-    res.json(picoPlacas);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+// READ - Obtener todos los registros
+const getAllPicoPlaca = async (req, res) => {
+    try {
+        const registros = await PicoPlaca.find().sort({ idint: 1 });
+        res.status(200).json({
+            success: true,
+            count: registros.length,
+            data: registros
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al obtener registros',
+            error: error.message
+        });
+    }
 };
 
+// READ - Obtener un registro por ID
+const getPicoPlacaById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const registro = await PicoPlaca.findOne({ idint: parseInt(id) });
+        
+        if (!registro) {
+            return res.status(404).json({
+                success: false,
+                message: 'Registro no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: registro
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al obtener registro',
+            error: error.message
+        });
+    }
+};
+
+// UPDATE - Actualizar registro por ID
 const updatePicoPlaca = async (req, res) => {
-  try {
-    const picoPlaca = await PicoPlaca.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!picoPlaca) return res.status(404).json({ message: 'No encontrado' });
-    res.json(picoPlaca);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+    try {
+        const { id } = req.params;
+        const { tipo_vehiculo, numero, dia } = req.body;
+
+        const registroActualizado = await PicoPlaca.findOneAndUpdate(
+            { idint: parseInt(id) },
+            { tipo_vehiculo, numero, dia },
+            { new: true, runValidators: true }
+        );
+
+        if (!registroActualizado) {
+            return res.status(404).json({
+                success: false,
+                message: 'Registro no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Registro actualizado exitosamente',
+            data: registroActualizado
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al actualizar registro',
+            error: error.message
+        });
+    }
 };
 
+// DELETE - Eliminar registro por ID
 const deletePicoPlaca = async (req, res) => {
-  try {
-    const picoPlaca = await PicoPlaca.findByIdAndDelete(req.params.id);
-    if (!picoPlaca) return res.status(404).json({ message: 'No encontrado' });
-    res.json({ message: 'Eliminado correctamente' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+    try {
+        const { id } = req.params;
+        const registroEliminado = await PicoPlaca.findOneAndDelete({ idint: parseInt(id) });
+
+        if (!registroEliminado) {
+            return res.status(404).json({
+                success: false,
+                message: 'Registro no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Registro eliminado exitosamente',
+            data: registroEliminado
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al eliminar registro',
+            error: error.message
+        });
+    }
 };
 
 module.exports = {
-  createPicoPlaca,
-  getPicoPlaca,
-  updatePicoPlaca,
-  deletePicoPlaca
+    createPicoPlaca,
+    getAllPicoPlaca,
+    getPicoPlacaById,
+    updatePicoPlaca,
+    deletePicoPlaca
 };

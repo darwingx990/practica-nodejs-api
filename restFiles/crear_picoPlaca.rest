@@ -1,0 +1,31 @@
+### Root Endpoint
+GET http://localhost:3000/
+
+### CREATE - Crear nuevo registro Pico & Placa
+POST http://localhost:3000/api/pico-placa
+Content-Type: application/json
+
+{
+  "tipo_vehiculo": "Automóvil",
+  "numero": "ABC-123",
+  "dia": "Lunes"
+}
+
+### READ - Obtener todos los registros
+GET http://localhost:3000/api/pico-placa
+
+### READ - Obtener un registro por ID
+GET http://localhost:3000/api/pico-placa/1
+
+### UPDATE - Actualizar registro por ID
+PUT http://localhost:3000/api/pico-placa/1
+Content-Type: application/json
+
+{
+  "tipo_vehiculo": "Motocicleta",
+  "numero": "XYZ-787",
+  "dia": "Martes"
+}
+
+### DELETE - Eliminar registro por ID
+DELETE http://localhost:3000/api/pico-placa/1

@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', parkingHistoryController.create);
 router.get('/', parkingHistoryController.findAll);
 router.get('/:id', parkingHistoryController.findById);
-router.get('/search', parkingHistoryController.searchByDescription);
+router.get('/search', parkingHistoryController.searchByTerm);
 router.put('/:id', parkingHistoryController.update);
 router.delete('/:id', parkingHistoryController.delete);
 

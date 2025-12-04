@@ -3,7 +3,7 @@ const Cell = require("../models/cellModel");
 // ================= CONTROLLER ================= //
 
 // Crear celda
-exports.create = async (req, res) => {
+const create = async (req, res) => {
   try {
     const data = req.body;
     const newCell = await Cell.create(data);
@@ -20,7 +20,7 @@ exports.create = async (req, res) => {
 };
 
 // Obtener todas las celdas
-exports.getAllCells = async (req, res) => {
+const getAllCells = async (req, res) => {
   try {
     const cells = await Cell.findAll();
 
@@ -33,7 +33,7 @@ exports.getAllCells = async (req, res) => {
 };
 
 // Obtener una celda por idint
-exports.getCellByIdint = async (req, res) => {
+const getCellByIdint = async (req, res) => {
   try {
     const { idint } = req.params;
 
@@ -54,7 +54,7 @@ exports.getCellByIdint = async (req, res) => {
 };
 
 // Actualizar una celda
-exports.updateCell = async (req, res) => {
+const updateCell = async (req, res) => {
   try {
     const { idint } = req.params;
     const data = req.body;
@@ -79,7 +79,7 @@ exports.updateCell = async (req, res) => {
 };
 
 // Eliminar celda
-exports.deleteCell = async (req, res) => {
+const deleteCell = async (req, res) => {
   try {
     const { idint } = req.params;
 
@@ -100,4 +100,13 @@ exports.deleteCell = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+// Exportar todas las funciones del controlador
+module.exports = {
+  create,
+  getAllCells,
+  getCellByIdint,
+  updateCell,
+  deleteCell
 };

@@ -3,7 +3,7 @@ const AccessExit = require("../models/accessExitModels");
 // ====================================================
 //  Crear un movimiento (entrada o salida)
 // ====================================================
-exports.createAccessExit = async (req, res) => {
+const createAccessExit = async (req, res) => {
   try {
     const data = req.body;
 
@@ -26,7 +26,7 @@ exports.createAccessExit = async (req, res) => {
 // ====================================================
 //  Obtener todos los registros
 // ====================================================
-exports.getAllAccessExits = async (req, res) => {
+const getAllAccessExits = async (req, res) => {
   try {
     const accessExits = await AccessExit.findAll();
     res.status(200).json(accessExits);
@@ -38,7 +38,7 @@ exports.getAllAccessExits = async (req, res) => {
 // ====================================================
 //  Obtener registros por tipo de movimiento (entrada/salida)
 // ====================================================
-exports.getByMovement = async (req, res) => {
+const getByMovement = async (req, res) => {
   try {
     const { movement } = req.params;
 
@@ -59,7 +59,7 @@ exports.getByMovement = async (req, res) => {
 // ====================================================
 //  Obtener por ID interno (idint autoincremental)
 // ====================================================
-exports.getByIdInt = async (req, res) => {
+const getByIdInt = async (req, res) => {
   try {
     const { idint } = req.params;
 
@@ -78,7 +78,7 @@ exports.getByIdInt = async (req, res) => {
 // ====================================================
 //  Filtrar por fecha (rango)
 // ====================================================
-exports.getByDateRange = async (req, res) => {
+const getByDateRange = async (req, res) => {
   try {
     const { start, end } = req.query;
 
@@ -104,7 +104,7 @@ exports.getByDateRange = async (req, res) => {
 // ====================================================
 //  Actualizar un registro
 // ====================================================
-exports.updateAccessExit = async (req, res) => {
+const updateAccessExit = async (req, res) => {
   try {
     const { idint } = req.params;
 
@@ -130,7 +130,7 @@ exports.updateAccessExit = async (req, res) => {
 // ====================================================
 //  Eliminar un registro
 // ====================================================
-exports.deleteAccessExit = async (req, res) => {
+const deleteAccessExit = async (req, res) => {
   try {
     const { idint } = req.params;
 
@@ -144,4 +144,14 @@ exports.deleteAccessExit = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+module.exports = {
+  createAccessExit,
+  getAllAccessExits,
+  getByMovement,
+  getByIdInt,
+  getByDateRange,
+  updateAccessExit,
+  deleteAccessExit
 };

@@ -1,0 +1,31 @@
+### Crear un registro de ParkingHistory
+POST http://localhost:3000/api/parking-history
+Content-Type: application/json
+
+{
+  "Celda_id": 1,
+  "Vehiculo_id": 1,
+  "fecha_hora": "2023-11-27T10:00:00Z"
+}
+
+### Obtener todos los registros de ParkingHistory
+GET http://localhost:3000/api/parking-history/
+
+### Obtener un registro por ID
+GET http://localhost:3000/api/parking-history/2
+
+### Buscar registros por Celda_id o Vehiculo_id
+GET http://localhost:3000/api/parking-history/2
+
+### Actualizar un registro por ID
+PUT http://localhost:3000/api/parking-history/1
+Content-Type: application/json
+
+{
+  "Celda_id": 2,
+  "Vehiculo_id": 1,
+  "fecha_hora": "2023-11-27T14:00:00Z"
+}
+
+### Eliminar un registro por ID
+DELETE http://localhost:3000/api/parking-history/1764867265783

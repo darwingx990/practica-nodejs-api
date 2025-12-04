@@ -4,19 +4,18 @@ const parkingHistory = require('../models/parkingHistory');
 const create = async (req, res) => {
   try {
     // Extraer los campos del cuerpo de la solicitud
-    const { placa, check_in, check_out, licensePlate, cost, observaciones, descripcion } = req.body;
-    const finalObservaciones = observaciones || descripcion;
+    const { Celda_id, Vehiculo_id, fecha_hora } = req.body;
 
     // Validar que los campos obligatorios estén presentes
-    if (!placa || !check_in || !check_out || !licensePlate || cost === undefined) {
+    if (!Celda_id || !Vehiculo_id || !fecha_hora) {
       return res.status(400).json({
         success: false,
-        message: 'Los campos placa, check_in, check_out, licensePlate y cost son obligatorios'
+        message: 'Los campos Celda_id, Vehiculo_id y fecha_hora son obligatorios'
       });
     }
 
     // Crear el registro en la base de datos
-    const newParkingHistory = new parkingHistory({ placa, check_in, check_out, licensePlate, cost, observaciones: finalObservaciones });
+    const newParkingHistory = new parkingHistory({ Celda_id, Vehiculo_id, fecha_hora });
     const ParkingHistory = await newParkingHistory.save();
 
     // Responder con éxito
@@ -36,7 +35,7 @@ const create = async (req, res) => {
   }
 };
 // Obtener todos los registros de historial de parqueo
-const findAll = async (req, res) => {
+const findAll = async (req,res) => {
   try {
     // Obtener todos los registros
     const parkingHistories = await parkingHistory.find().sort({ createdAt: -1 });
@@ -99,9 +98,9 @@ const findById = async (req, res) => {
     });
   }
 }
-
-// Buscar registros de historial de parqueo por término en observaciones
-const searchByDescription = async (req, res) => {
+  
+// Buscar registros de historial de parqueo por Celda_id o Vehiculo_id
+const searchByTerm = async (req, res) => {
   try {
     // Extraer el término de búsqueda de los query parameters
     const { term } = req.query;
@@ -114,12 +113,14 @@ const searchByDescription = async (req, res) => {
       });
     }
 
+    // Convertir term a número si es posible
+    const termNum = parseInt(term);
+
     // Realizar la búsqueda
     const parkingHistoryRecords = await parkingHistory.find({
       $or: [
-        { observaciones: { $regex: term, $options: 'i' } },
-        { placa: { $regex: term, $options: 'i' } },
-        { licensePlate: { $regex: term, $options: 'i' } }
+        { Celda_id: termNum },
+        { Vehiculo_id: termNum }
       ]
     }).sort({ createdAt: -1 });
 
@@ -145,8 +146,7 @@ const update = async (req, res) => {
   try {
     // Extraer el ID de los parámetros y los datos del cuerpo
     const { id } = req.params;
-    const { placa, check_in, check_out, licensePlate, cost, observaciones, descripcion } = req.body;
-    const finalObservaciones = observaciones !== undefined ? observaciones : descripcion;
+    const { Celda_id, Vehiculo_id, fecha_hora } = req.body;
 
     // Validar que el ID esté presente
     if (!id) {
@@ -167,12 +167,9 @@ const update = async (req, res) => {
 
     // Construir el objeto de actualización solo con campos proporcionados
     const updateData = {};
-    if (placa !== undefined) updateData.placa = placa;
-    if (check_in !== undefined) updateData.check_in = check_in;
-    if (check_out !== undefined) updateData.check_out = check_out;
-    if (licensePlate !== undefined) updateData.licensePlate = licensePlate;
-    if (cost !== undefined) updateData.cost = cost;
-    if (finalObservaciones !== undefined) updateData.observaciones = finalObservaciones;
+    if (Celda_id !== undefined) updateData.Celda_id = Celda_id;
+    if (Vehiculo_id !== undefined) updateData.Vehiculo_id = Vehiculo_id;
+    if (fecha_hora !== undefined) updateData.fecha_hora = fecha_hora;
 
     // Actualizar el registro
     const updatedParkingHistory = await parkingHistory.findOneAndUpdate(
@@ -245,7 +242,7 @@ module.exports = {
   create,
   findAll,
   findById,
-  searchByDescription,
+  searchByTerm,
   update,
   delete: deleteParkingHistory
 };

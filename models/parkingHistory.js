@@ -1,24 +1,28 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 // Schema for counter functionality
 const counterSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
+    _id: { type: String, required: true, unique: true },
     seq: { type: Number, default: 0 }
 });
+
 const Counter = mongoose.models.Counter || mongoose.model('Counter', counterSchema);
 
 const ParkingHistorySchema = new mongoose.Schema({
-    idint: { type: Number, unique: true },
-    date: { type: Date, required: true },
-    vehiculeId: { type: Number, ref: 'vehicule', required: true, index: true },
-    cellId: { type: Number, ref: 'cellModel', required: true, index: true }
-}, { timestamps: true });
+  idint: { type: Number, unique: true },
+  Celda_id: { type: Number, required: true },
+  Vehiculo_id: { type: Number, required: true },
+  fecha_hora: { type: Date, required: true }
+}, {
+  timestamps: true
+});
+
 // Pre-save hook to auto-increment idint
-ParkingHistorySchema.pre('save', async function (next) {
+ParkingHistorySchema.pre('save', async function(next) {
     if (this.isNew) {
         try {
-            const counter = await Counter.findOneAndUpdate(
-                { name: 'parkingHistory' },
+            const counter = await Counter.findByIdAndUpdate(
+                'parkingHistory',
                 { $inc: { seq: 1 } },
                 { new: true, upsert: true }
             );
@@ -31,7 +35,8 @@ ParkingHistorySchema.pre('save', async function (next) {
         next();
     }
 });
+
 // Crear el modelo
 const ParkingHistory = mongoose.models.ParkingHistory || mongoose.model('ParkingHistory', ParkingHistorySchema);
 
-export default ParkingHistory;
+module.exports = ParkingHistory;

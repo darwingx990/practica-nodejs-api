@@ -6,7 +6,6 @@ Content-Type: application/json
   "movement": "Entrada",
   "door": "Puerta Principal",
   "dateTime": "2024-11-28T10:00:00Z",
-  "stateTime": "2",
   "vehiculeId": "25",
   "userId": 1
 }
@@ -46,3 +45,7 @@ Content-Type: application/json
   "door": "Puerta Trasera",
   "dateTime": "2024-11-28T10:30:00Z"
 }
+
+### Eliminar registro por ID interno
+# Reemplaza 1 con un idint válido
+DELETE http://localhost:3000/api/access-exits/1

@@ -1,45 +1,47 @@
-const incidencyReports = require('../models/incidencyReports.js');
+const IncidencyReport = require("../models/incidencyReports");
 
 // Validate Create method (Create a new incidency report)
 const create = async (req, res) => {
     try {
-        const { data } = req.body;
-
-        if (!data) {
+        const reportData = req.body;
+        
+        // Validaciones básicas
+        if (!reportData.description) {
             return res.status(400).json({
                 success: false,
-                message: 'All fields are required'
+                message: "description is required"
             });
         }
 
-        // Call the create method of the model
-        const incidencyReport = await incidencyReports.create(data);
+        const newReport = new IncidencyReport(reportData);
+        await newReport.save();
+
         res.status(201).json({
             success: true,
-            message: 'Report created successfully',
-            data: incidencyReport
+            message: "Incidency report created successfully",
+            data: newReport
         });
     } catch (error) {
-        console.error('Error to create the report:', error);
         res.status(500).json({
             success: false,
-            message: 'Internal error with creating the report on the server side.',
-            data: error.message
+            message: "Error creating incidency report",
+            error: error.message
         });
     }
 };
 
 const getAll = async (req, res) => {
     try {
-        const reports = await incidencyReports.findAll();
+        const reports = await IncidencyReport.find().sort({ createdAt: -1 });
         res.status(200).json({
             success: true,
+            count: reports.length,
             data: reports
         });
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error retrieving reports',
+            message: "Error fetching incidency reports",
             error: error.message
         });
     }
@@ -48,15 +50,23 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
     try {
         const { id } = req.params;
-        const report = await incidencyReports.findById(parseInt(id));
+        const report = await IncidencyReport.findById(id);
+
+        if (!report) {
+            return res.status(404).json({
+                success: false,
+                message: "Incidency report not found"
+            });
+        }
+
         res.status(200).json({
             success: true,
             data: report
         });
     } catch (error) {
-        res.status(404).json({
+        res.status(500).json({
             success: false,
-            message: 'Report not found',
+            message: "Error fetching incidency report",
             error: error.message
         });
     }
@@ -65,17 +75,30 @@ const getById = async (req, res) => {
 const update = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = req.body;
-        const report = await incidencyReports.update(parseInt(id), data);
+        const updateData = req.body;
+
+        const report = await IncidencyReport.findByIdAndUpdate(
+            id,
+            updateData,
+            { new: true, runValidators: true }
+        );
+
+        if (!report) {
+            return res.status(404).json({
+                success: false,
+                message: "Incidency report not found"
+            });
+        }
+
         res.status(200).json({
             success: true,
-            message: 'Report updated successfully',
+            message: "Incidency report updated successfully",
             data: report
         });
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error updating report',
+            message: "Error updating incidency report",
             error: error.message
         });
     }
@@ -84,28 +107,33 @@ const update = async (req, res) => {
 const deleteReport = async (req, res) => {
     try {
         const { id } = req.params;
-        const report = await incidencyReports.delete(parseInt(id));
+
+        const report = await IncidencyReport.findByIdAndDelete(id);
+
+        if (!report) {
+            return res.status(404).json({
+                success: false,
+                message: "Incidency report not found"
+            });
+        }
+
         res.status(200).json({
             success: true,
-            message: 'Report deleted successfully',
-            data: report
+            message: "Incidency report deleted successfully"
         });
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error deleting report',
+            message: "Error deleting incidency report",
             error: error.message
         });
     }
 };
 
-// Exporting the functions to be used in the controller
 module.exports = {
     create,
     getAll,
     getById,
     update,
-    delete: deleteReport
+    deleteReport
 };
-
-
