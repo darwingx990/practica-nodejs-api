@@ -6,7 +6,8 @@ Content-Type: application/json
   "movement": "Entrada",
   "door": "Puerta Principal",
   "dateTime": "2024-11-28T10:00:00Z",
-  "vehiculeId": "ABC123",
+  "stateTime": "2",
+  "vehiculeId": "25",
   "userId": 1
 }
 

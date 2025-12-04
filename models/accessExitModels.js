@@ -70,7 +70,6 @@ accessExitSchema.pre("save", async function (next) {
 });
 
 //method for recording an input and output
-
 accessExitSchema.statics.create = async function (data) {
   try {
     const accessExit = new this(data);
@@ -79,6 +78,11 @@ accessExitSchema.statics.create = async function (data) {
   } catch (error) {
     throw new Error("Error creating accessExit:");
   }
+};
+
+// Alias to align with controller naming
+accessExitSchema.statics.createAccessExit = async function (data) {
+  return this.create(data);
 };
 
 //view all entries and exits
@@ -93,10 +97,10 @@ accessExitSchema.statics.findAll = async function () {
 };
 
 //search by input or output
-
-accessExitSchema.statics.findByMovement = async function (idint) {
+accessExitSchema.statics.findByMovement = async function (movement) {
   try {
-    const accessExit = await this.find({ idint });
+    const normalized = movement?.toLowerCase();
+    const accessExit = await this.find({ movement: normalized }).sort({ dateTime: -1 });
     if (!accessExit) return null;
     return accessExit;
   } catch (error) {

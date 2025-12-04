@@ -106,11 +106,16 @@ exports.getByDateRange = async (req, res) => {
 // ====================================================
 exports.updateAccessExit = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { idint } = req.params;
 
-    const updated = await AccessExit.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const updated = await AccessExit.findOneAndUpdate(
+      { idint: Number(idint) },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!updated) {
       return res.status(404).json({ message: "register not found" });
@@ -127,9 +132,9 @@ exports.updateAccessExit = async (req, res) => {
 // ====================================================
 exports.deleteAccessExit = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { idint } = req.params;
 
-    const result = await AccessExit.findByIdAndDelete(id);
+    const result = await AccessExit.findOneAndDelete({ idint: Number(idint) });
 
     if (!result) {
       return res.status(404).json({ message: "register not found" });

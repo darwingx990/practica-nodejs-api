@@ -16,11 +16,11 @@ GET http://localhost:3000/api/cells/1
 
 ### Actualizar celda por ID interno
 # Reemplaza 1 con un idint válido
-PUT http://localhost:3000/api/cells/1
+PUT http://localhost:3000/api/cells/25
 Content-Type: application/json
 
 {
-  "type": "Carro",
+  "type": "Bikecycle",
   "state": "Ocupado"
 }
 
