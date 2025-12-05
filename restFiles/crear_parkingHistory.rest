@@ -28,4 +28,4 @@ Content-Type: application/json
 }
 
 ### Eliminar un registro por ID
-DELETE http://localhost:3000/api/parking-history/1764867265783
+DELETE http://localhost:3000/api/parking-history/2
